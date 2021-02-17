@@ -147,6 +147,7 @@ public class ControllerInput {
     }
 
     Vector2f cameraVec(Report report, double deadzone) {
+        final double COEFFICIENT = 4.0;
         Report.Stick stick = report.rightStick;
         double horizontal, vertical;
 
@@ -158,7 +159,7 @@ public class ControllerInput {
             vertical = -stick.vertical;
         }
 
-        return new Vector2f((float) vertical, (float) horizontal);
+        return new Vector2f((float) (vertical * COEFFICIENT), (float) (horizontal * COEFFICIENT));
     }
 
     @SubscribeEvent
