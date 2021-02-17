@@ -15,7 +15,7 @@ public class ButtonBindings {
     public static final ButtonBinding DROP_ITEM = new ButtonBinding(Report.Buttons.Down, "key.drop", "key.categories.gameplay", KeyConflictContext.IN_GAME);
     public static final ButtonBinding USE_ITEM = new ButtonBinding(Report.Buttons.R, "key.use", "key.categories.gameplay", KeyConflictContext.IN_GAME);
     public static final ButtonBinding ATTACK = new ButtonBinding(Report.Buttons.ZR, "key.attack", "key.categories.gameplay", KeyConflictContext.IN_GAME);
-    public static final ButtonBinding PICK_BLOCK = new ButtonBinding(Report.Buttons.Y, "key.pickItem", "key.categories.gameplay", KeyConflictContext.IN_GAME);
+    public static final ButtonBinding PICK_BLOCK = new ButtonBinding(Report.Buttons.A, "key.pickItem", "key.categories.gameplay", KeyConflictContext.IN_GAME);
     public static final ButtonBinding PLAYER_LIST = new ButtonBinding(Report.Buttons.Plus, "key.playerlist", "key.categories.multiplayer", KeyConflictContext.IN_GAME);
     public static final ButtonBinding TOGGLE_PERSPECTIVE = new ButtonBinding(Report.Buttons.Minus, "key.togglePerspective", "key.categories.misc", KeyConflictContext.IN_GAME);
     public static final ButtonBinding CHAT = new ButtonBinding(Report.Buttons.Up, "key.chat", "key.categories.gameplay", KeyConflictContext.IN_GAME);
