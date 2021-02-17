@@ -528,6 +528,10 @@ public class ControllerInput {
                 event.getMovementInput().rightKeyDown = travelY.y < 0;
                 event.getMovementInput().leftKeyDown = travelY.y > 0;
                 event.getMovementInput().moveStrafe = travelY.y;
+
+                if (event.getMovementInput().sneaking) {
+                    event.getMovementInput().moveStrafe *= 0.3D;
+                }
             }
 
 //            if (Math.abs(controller.getLThumbStickXValue()) >= deadZone) {
