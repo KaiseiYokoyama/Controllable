@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "joycon-rs-jna"
+]
+
+[profile.release]
+lto = true

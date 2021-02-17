@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mrcrayfish.controllable.client.BindingRegistry;
 import com.mrcrayfish.controllable.client.ButtonBinding;
+import com.mrcrayfish.controllable.joycon.Report;
 import net.minecraft.client.gui.DialogTexts;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -102,7 +103,7 @@ public class ButtonBindingScreen extends Screen
         return super.keyPressed(key, scanCode, mods);
     }
 
-    public boolean processButton(int index)
+    public boolean processButton(Report.Buttons index)
     {
         if(this.selectedBinding != null)
         {

@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import com.mrcrayfish.controllable.Controllable;
+import com.mrcrayfish.controllable.joycon.Report;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +30,7 @@ public class BindingRegistry
         getInstance().register(ButtonBindings.PICK_BLOCK);
         getInstance().register(ButtonBindings.PLAYER_LIST);
         getInstance().register(ButtonBindings.TOGGLE_PERSPECTIVE);
+        getInstance().register(ButtonBindings.CHAT);
         getInstance().register(ButtonBindings.SCREENSHOT);
         getInstance().register(ButtonBindings.SCROLL_LEFT);
         getInstance().register(ButtonBindings.SCROLL_RIGHT);
@@ -44,11 +46,6 @@ public class BindingRegistry
         getInstance().register(ButtonBindings.PICKUP_ITEM);
         getInstance().register(ButtonBindings.QUICK_MOVE);
         getInstance().register(ButtonBindings.SPLIT_STACK);
-        getInstance().register(ButtonBindings.ADVANCEMENTS);
-        getInstance().register(ButtonBindings.HIGHLIGHT_PLAYERS);
-        getInstance().register(ButtonBindings.CINEMATIC_CAMERA);
-        getInstance().register(ButtonBindings.FULLSCREEN);
-        getInstance().register(ButtonBindings.DEBUG_INFO);
     }
 
     private static BindingRegistry instance;
@@ -64,7 +61,7 @@ public class BindingRegistry
 
     private List<ButtonBinding> bindings = new ArrayList<>();
     private Map<String, ButtonBinding> registeredBindings = new HashMap<>();
-    private Map<Integer, List<ButtonBinding>> idToButtonList = new HashMap<>();
+    private Map<Report.Buttons, List<ButtonBinding>> idToButtonList = new HashMap<>();
 
     private BindingRegistry() {}
 
@@ -73,7 +70,7 @@ public class BindingRegistry
         return this.bindings;
     }
 
-    List<ButtonBinding> getBindingListForButton(int button)
+    List<ButtonBinding> getBindingListForButton(Report.Buttons button)
     {
         List<ButtonBinding> list = this.idToButtonList.get(button);
         return list != null ? ImmutableList.copyOf(list) : ImmutableList.of();
@@ -96,7 +93,7 @@ public class BindingRegistry
     public void resetBindingHash()
     {
         this.idToButtonList.clear();
-        this.bindings.stream().filter(binding -> binding.getButton() != -1).forEach(binding -> {
+        this.bindings.stream().forEach(binding -> {
             this.idToButtonList.computeIfAbsent(binding.getButton(), i -> new ArrayList<>()).add(binding);
         });
     }
@@ -110,10 +107,10 @@ public class BindingRegistry
             properties.load(reader);
             this.bindings.stream().filter(ButtonBinding::isNotReserved).forEach(binding ->
             {
-                String name = properties.getProperty(binding.getDescription(), Buttons.getNameForButton(binding.getButton()));
+                String name = properties.getProperty(binding.getDescription(), Report.Buttons.getNameForButton(binding.getButton()));
                 if(name != null)
                 {
-                    binding.setButton(Buttons.getButtonFromName(name));
+                    binding.setButton(Report.Buttons.getButtonFromName(name));
                 }
             });
             this.resetBindingHash();
@@ -129,7 +126,7 @@ public class BindingRegistry
         Properties properties = new Properties();
         this.bindings.stream().filter(ButtonBinding::isNotReserved).forEach(binding ->
         {
-            String name = Buttons.getNameForButton(binding.getButton());
+            String name = Report.Buttons.getNameForButton(binding.getButton());
             if(name != null)
             {
                 properties.put(binding.getDescription(), name);

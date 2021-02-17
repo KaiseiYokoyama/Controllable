@@ -1,6 +1,7 @@
 package com.mrcrayfish.controllable.event;
 
 import com.mrcrayfish.controllable.client.Action;
+import com.mrcrayfish.controllable.joycon.Report;
 import net.minecraftforge.eventbus.api.Event;
 
 import java.util.Map;
@@ -11,14 +12,14 @@ import java.util.Map;
 @Deprecated
 public class AvailableActionsEvent extends Event
 {
-    private Map<Integer, Action> actions;
+    private Map<Report.Buttons, Action> actions;
 
-    public AvailableActionsEvent(Map<Integer, Action> actions)
+    public AvailableActionsEvent(Map<Report.Buttons, Action> actions)
     {
         this.actions = actions;
     }
 
-    public Map<Integer, Action> getActions()
+    public Map<Report.Buttons, Action> getActions()
     {
         return this.actions;
     }

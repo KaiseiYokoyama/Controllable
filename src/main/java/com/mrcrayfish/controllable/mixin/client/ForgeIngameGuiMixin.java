@@ -3,9 +3,7 @@ package com.mrcrayfish.controllable.mixin.client;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mrcrayfish.controllable.Config;
-import com.mrcrayfish.controllable.Controllable;
 import com.mrcrayfish.controllable.client.ButtonBindings;
-import com.mrcrayfish.controllable.client.Controller;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,7 +44,7 @@ public class ForgeIngameGuiMixin
      */
     private static boolean canShowPlayerList()
     {
-        Controller controller = Controllable.getController();
-        return controller != null && ButtonBindings.PLAYER_LIST.isButtonDown();
+//        Controller controller = Controllable.getController();
+        return /*controller != null && */ButtonBindings.PLAYER_LIST.isButtonDown();
     }
 }

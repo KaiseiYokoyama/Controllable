@@ -24,7 +24,7 @@ public class OptifineGameRendererMixin
     {
         Object[] params = args.get(1);
         ControllerInput input = Controllable.getInput();
-        if(Controllable.getController() != null && Config.CLIENT.options.virtualMouse.get() && input.getLastUse() > 0)
+        if(/*Controllable.getController() != null && */Config.CLIENT.options.virtualMouse.get() && input.getLastUse() > 0)
         {
             Minecraft minecraft = Minecraft.getInstance();
             int mouseX = (int) (input.getVirtualMouseX() * (double) minecraft.getMainWindow().getScaledWidth() / (double) minecraft.getMainWindow().getWidth());

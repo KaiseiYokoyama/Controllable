@@ -48,6 +48,6 @@ public class MouseUtilMixin
 
     private static boolean isVirtualMouseActive(ControllerInput input)
     {
-        return Controllable.getController() != null && Config.CLIENT.options.virtualMouse.get() && input.getLastUse() > 0;
+        return /*Controllable.getController() != null && */Config.CLIENT.options.virtualMouse.get() && input.getLastUse() > 0;
     }
 }

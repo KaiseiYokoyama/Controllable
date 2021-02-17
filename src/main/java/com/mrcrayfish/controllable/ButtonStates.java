@@ -1,35 +1,37 @@
 package com.mrcrayfish.controllable;
 
-import com.mrcrayfish.controllable.client.Buttons;
+import com.mrcrayfish.controllable.joycon.Report;
 
-/**
- * Author: MrCrayfish
- */
-public class ButtonStates
-{
-    private boolean[] states;
+import java.util.HashMap;
 
-    public ButtonStates()
-    {
-        this.states = new boolean[Buttons.LENGTH];
+public class ButtonStates {
+    private HashMap<Report.Buttons, Boolean> states;
+
+    public ButtonStates() {
+        this.states = new HashMap<>();
     }
 
-    public boolean getState(int index)
-    {
-        if(index < 0 || index >= states.length)
+    public ButtonStates(Report report) {
+        HashMap<Report.Buttons, Boolean> states = new HashMap<>();
+
+        for (Report.Buttons button: Report.Buttons.values()) {
+            states.put(button, report.pressedButtons.contains(button));
+        }
+
+        this.states = states;
+    }
+
+    public boolean getState(Report.Buttons button) {
+        Boolean value = this.states.get(button);
+
+        if (value != null) {
+            return value;
+        } else {
             return false;
-        return this.states[index];
+        }
     }
 
-    protected void setState(int index, boolean state)
-    {
-        if(index < 0 || index >= states.length)
-            return;
-        this.states[index] = state;
-    }
-
-    public int getSize()
-    {
-        return this.states.length;
+    public void setState(Report.Buttons button, boolean state) {
+        this.states.put(button, state);
     }
 }

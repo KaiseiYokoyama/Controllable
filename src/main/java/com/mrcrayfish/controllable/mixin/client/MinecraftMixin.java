@@ -3,7 +3,6 @@ package com.mrcrayfish.controllable.mixin.client;
 import com.mrcrayfish.controllable.Config;
 import com.mrcrayfish.controllable.Controllable;
 import com.mrcrayfish.controllable.client.ButtonBindings;
-import com.mrcrayfish.controllable.client.Controller;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
@@ -47,8 +46,8 @@ public class MinecraftMixin
      */
     private static boolean isRightClicking()
     {
-        Controller controller = Controllable.getController();
-        return controller != null && ButtonBindings.USE_ITEM.isButtonDown();
+//        Controller controller = Controllable.getController();
+        return /*controller != null && */ButtonBindings.USE_ITEM.isButtonDown();
     }
 
     /**
@@ -58,8 +57,8 @@ public class MinecraftMixin
     private static boolean isLeftClicking()
     {
         Minecraft mc = Minecraft.getInstance();
-        Controller controller = Controllable.getController();
-        if(controller != null && ButtonBindings.ATTACK.isButtonDown())
+//        Controller controller = Controllable.getController();
+        if(/*controller != null && */ButtonBindings.ATTACK.isButtonDown())
         {
             boolean usingVirtualMouse = (Config.CLIENT.options.virtualMouse.get() && Controllable.getInput().getLastUse() > 0);
             return mc.currentScreen == null && (mc.mouseHelper.isMouseGrabbed() || usingVirtualMouse);
@@ -67,12 +66,12 @@ public class MinecraftMixin
         return false;
     }
 
-    @Inject(method = "isEntityGlowing", at = @At(value = "HEAD"), cancellable = true)
-    private void isEntityGlowing(Entity entity, CallbackInfoReturnable<Boolean> cir)
-    {
-        if(this.player != null && this.player.isSpectator() && ButtonBindings.HIGHLIGHT_PLAYERS.isButtonDown() && entity.getType() == EntityType.PLAYER)
-        {
-            cir.setReturnValue(true);
-        }
-    }
+//    @Inject(method = "isEntityGlowing", at = @At(value = "HEAD"), cancellable = true)
+//    private void isEntityGlowing(Entity entity, CallbackInfoReturnable<Boolean> cir)
+//    {
+//        if(this.player != null && this.player.isSpectator() && ButtonBindings.HIGHLIGHT_PLAYERS.isButtonDown() && entity.getType() == EntityType.PLAYER)
+//        {
+//            cir.setReturnValue(true);
+//        }
+//    }
 }

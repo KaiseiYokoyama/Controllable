@@ -2,6 +2,7 @@ package com.mrcrayfish.controllable.client.gui;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mrcrayfish.controllable.Reference;
 import com.mrcrayfish.controllable.client.BindingRegistry;
 import com.mrcrayfish.controllable.client.ButtonBinding;
 import com.mrcrayfish.controllable.client.gui.widget.ButtonBindingButton;
@@ -9,6 +10,7 @@ import com.mrcrayfish.controllable.client.gui.widget.ImageButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.widget.list.AbstractOptionList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -114,7 +116,7 @@ public class ButtonBindingList extends AbstractOptionList<ButtonBindingList.Entr
             this.bindingButton = new ButtonBindingButton(0, 0, binding, button -> {
                 ButtonBindingList.this.screen.setSelectedBinding(this.binding);
             });
-            this.deleteButton = new ImageButton(0, 0, 20, ControllerLayoutScreen.TEXTURE, 108, 0, 16, 16, button -> {
+            this.deleteButton = new ImageButton(0, 0, 20, new ResourceLocation(Reference.MOD_ID, "textures/gui/controller.png"), 108, 0, 16, 16, button -> {
                 binding.reset();
                 BindingRegistry registry = BindingRegistry.getInstance();
                 registry.resetBindingHash();
@@ -148,7 +150,7 @@ public class ButtonBindingList extends AbstractOptionList<ButtonBindingList.Entr
         {
             if(button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && this.bindingButton.isHovered())
             {
-                this.binding.setButton(-1);
+                this.binding.setButton(null);
                 this.bindingButton.playDownSound(Minecraft.getInstance().getSoundHandler());
                 return true;
             }

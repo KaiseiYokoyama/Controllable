@@ -2,10 +2,11 @@ package com.mrcrayfish.controllable.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mrcrayfish.controllable.client.gui.ControllerLayoutScreen;
+import com.mrcrayfish.controllable.Reference;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 /**
@@ -29,7 +30,7 @@ public class ControllerToast implements IToast
         RenderSystem.color3f(1.0F, 1.0F, 1.0F);
         toastGui.blit(matrixStack, 0, 0, 0, 32, 160, 32);
 
-        toastGui.getMinecraft().getTextureManager().bindTexture(ControllerLayoutScreen.TEXTURE);
+        toastGui.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/controller.png"));
         toastGui.blit(matrixStack, 8, 8, 20, 43, 20, 16);
 
         String title = toastGui.getMinecraft().fontRenderer.func_238412_a_(this.controllerName, 120); //TODO test

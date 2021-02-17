@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mrcrayfish.controllable.Config;
 import com.mrcrayfish.controllable.Controllable;
 import com.mrcrayfish.controllable.client.ButtonBinding;
-import com.mrcrayfish.controllable.client.Controller;
 import com.mrcrayfish.controllable.client.RenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
@@ -33,11 +32,11 @@ public class ButtonBindingButton extends Button
     {
         super.renderButton(matrixStack, mouseX, mouseY, partialTicks);
 
-        Controller controller = Controllable.getController();
-        if(controller == null)
-            return;
+//        Controller controller = Controllable.getController();
+//        if(controller == null)
+//            return;
 
-        int texU = this.binding.getButton() * 13;
+        int texU = this.binding.getButton().index() * 13;
         int texV = Config.CLIENT.options.controllerIcons.get().ordinal() * 13;
         int size = 13;
         Minecraft.getInstance().getTextureManager().bindTexture(RenderEvents.CONTROLLER_BUTTONS);

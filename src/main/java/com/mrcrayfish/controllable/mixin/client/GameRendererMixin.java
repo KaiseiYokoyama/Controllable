@@ -24,7 +24,7 @@ public class GameRendererMixin
     private void drawScreen(Args args)
     {
         ControllerInput input = Controllable.getInput();
-        if(Controllable.getController() != null && Config.CLIENT.options.virtualMouse.get() && input.getLastUse() > 0)
+        if(/*Controllable.getController() != null && */Config.CLIENT.options.virtualMouse.get() && input.getLastUse() > 0)
         {
             Minecraft minecraft = Minecraft.getInstance();
             int mouseX = (int) (input.getVirtualMouseX() * (double) minecraft.getMainWindow().getScaledWidth() / (double) minecraft.getMainWindow().getWidth());
@@ -37,7 +37,7 @@ public class GameRendererMixin
     @Redirect(method = "updateCameraAndRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayInGameMenu(Z)V"))
     private void onPause(Minecraft minecraft, boolean pauseOnly)
     {
-        if(Controllable.getController() == null || !Config.CLIENT.options.virtualMouse.get())
+        if(/*Controllable.getController() == null || */!Config.CLIENT.options.virtualMouse.get())
         {
             minecraft.displayInGameMenu(false);
         }

@@ -9,11 +9,14 @@ import com.mrcrayfish.controllable.event.AvailableActionsEvent;
 import com.mrcrayfish.controllable.event.GatherActionsEvent;
 import com.mrcrayfish.controllable.event.RenderAvailableActionsEvent;
 import com.mrcrayfish.controllable.event.RenderPlayerPreviewEvent;
+import com.mrcrayfish.controllable.joycon.JoyConRSHandler;
+import com.mrcrayfish.controllable.joycon.Report;
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IngameGui;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
+import net.minecraft.client.gui.toasts.SystemToast;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.container.Slot;
@@ -23,6 +26,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,12 +42,27 @@ import java.util.Map;
 public class RenderEvents
 {
     public static final ResourceLocation CONTROLLER_BUTTONS = new ResourceLocation(Reference.MOD_ID, "textures/gui/buttons.png");
+    private int tickCounter;
+    private final int scanInterval = 100;
 
-    private Map<Integer, Action> actions = new HashMap<>();
+    private Map<Report.Buttons, Action> actions = new HashMap<>();
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
     {
+        if (tickCounter >= scanInterval) {
+            tickCounter = 0;
+
+            if (JoyConRSHandler.INSTANCE.scan()) {
+
+                // Notification
+                ControllerToast toast = new ControllerToast(true, "Pro Controller");
+                Minecraft.getInstance().getToastGui().add(toast);
+            }
+        } else {
+            tickCounter++;
+        }
+
         Minecraft mc = Minecraft.getInstance();
         if(event.phase == TickEvent.Phase.START && mc.player != null && !mc.gameSettings.hideGUI)
         {
@@ -225,8 +244,8 @@ public class RenderEvents
         if(mc.gameSettings.hideGUI)
             return;
 
-        if(Controllable.getController() == null)
-            return;
+//        if(Controllable.getController() == null)
+//            return;
 
         RenderSystem.pushMatrix();
         {
@@ -237,7 +256,7 @@ public class RenderEvents
 
                 int leftIndex = 0;
                 int rightIndex = 0;
-                for(int button : this.actions.keySet())
+                for(Report.Buttons button : this.actions.keySet())
                 {
                     Action action = this.actions.get(button);
                     Action.Side side = action.getSide();
@@ -252,7 +271,7 @@ public class RenderEvents
                     }
 */
 
-                    int texU = button * 13;
+                    int texU = button.index() * 13;
                     int texV = Config.CLIENT.options.controllerIcons.get().ordinal() * 13;
                     int size = 13;
 

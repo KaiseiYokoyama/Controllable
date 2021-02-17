@@ -35,8 +35,8 @@ public class ControllerEvents
             return;
         }
 
-        Controller controller = Controllable.getController();
-        if(controller != null)
+//        Controller controller = Controllable.getController();
+//        if(controller != null)
         {
             float magnitudeFactor = 0.5F;
             UseAction action = event.getItem().getUseAction();
@@ -67,11 +67,11 @@ public class ControllerEvents
             return;
         }
 
-        Controller controller = Controllable.getController();
-        if(controller == null)
-        {
-            return;
-        }
+//        Controller controller = Controllable.getController();
+//        if(controller == null)
+//        {
+//            return;
+//        }
 
         Minecraft mc = Minecraft.getInstance();
         if(mc.world != null && Config.CLIENT.options.forceFeedback.get())

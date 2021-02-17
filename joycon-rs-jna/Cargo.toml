@@ -1,0 +1,16 @@
+[package]
+name = "joycon-rs-jna"
+version = "0.1.0"
+authors = ["KYokoyama <8509057+KaiseiYokoyama@users.noreply.github.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+joycon-rs = "0.6.1"
+once_cell = "1.5.2"
+crossbeam-channel = "0.5.0"
+hidapi-alt-for-hidapi-issue-127 = "1.2.1"

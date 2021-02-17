@@ -1,5 +1,6 @@
 package com.mrcrayfish.controllable.client;
 
+import com.mrcrayfish.controllable.joycon.Report;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 
@@ -8,10 +9,9 @@ import java.util.List;
 /**
  * Author: MrCrayfish
  */
-public class ButtonBinding implements Comparable<ButtonBinding>
-{
-    private final int defaultButton;
-    private int button;
+public class ButtonBinding implements Comparable<ButtonBinding> {
+    private final Report.Buttons defaultButton;
+    private Report.Buttons button;
     private String descriptionKey;
     private String category;
     private IKeyConflictContext context;
@@ -19,12 +19,12 @@ public class ButtonBinding implements Comparable<ButtonBinding>
     private int pressedTime;
     private boolean reserved;
 
-    public ButtonBinding(int button, String descriptionKey, String category, IKeyConflictContext context)
+    public ButtonBinding(Report.Buttons button, String descriptionKey, String category, IKeyConflictContext context)
     {
         this(button, descriptionKey, category, context, false);
     }
 
-    ButtonBinding(int button, String descriptionKey, String category, IKeyConflictContext context, boolean reserved)
+    ButtonBinding(Report.Buttons button, String descriptionKey, String category, IKeyConflictContext context, boolean reserved)
     {
         this.defaultButton = button;
         this.button = button;
@@ -34,12 +34,12 @@ public class ButtonBinding implements Comparable<ButtonBinding>
         this.reserved = reserved;
     }
 
-    public int getButton()
+    public Report.Buttons getButton()
     {
         return this.button;
     }
 
-    public void setButton(int button)
+    public void setButton(Report.Buttons button)
     {
         this.button = button;
     }
@@ -90,7 +90,7 @@ public class ButtonBinding implements Comparable<ButtonBinding>
         }
     }
 
-    public static void setButtonState(int button, boolean state)
+    public static void setButtonState(Report.Buttons button, boolean state)
     {
         List<ButtonBinding> bindings = BindingRegistry.getInstance().getBindingListForButton(button);
         for(ButtonBinding binding : bindings)

@@ -1,8 +1,9 @@
 package com.mrcrayfish.controllable.mixin.client;
 
 import com.mrcrayfish.controllable.Controllable;
-import com.mrcrayfish.controllable.client.Buttons;
-import com.mrcrayfish.controllable.client.Controller;
+//import com.mrcrayfish.controllable.client.Buttons;
+//import com.mrcrayfish.controllable.client.Controller;
+import com.mrcrayfish.controllable.joycon.Report;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
@@ -76,7 +77,7 @@ public abstract class ContainerScreenMixin
      */
     private static boolean canQuickMove()
     {
-        Controller controller = Controllable.getController();
-        return controller != null && Controllable.isButtonPressed(Buttons.B);
+//        Controller controller = Controllable.getController();
+        return /*controller != null && */Controllable.isButtonPressed(Report.Buttons.B);
     }
 }
