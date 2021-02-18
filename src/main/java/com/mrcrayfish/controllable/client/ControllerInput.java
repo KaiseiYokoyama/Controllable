@@ -172,6 +172,9 @@ public class ControllerInput {
                 this.lastUse--;
             }
 
+            if (this.latestReport == null) {
+                return;
+            }
 //            Controller controller = Controllable.getController();
 //            if(controller == null)
 //                return;
@@ -211,7 +214,7 @@ public class ControllerInput {
                 float xAxis = (float) this.latestReport.leftStick.horizontal;
                 this.mouseSpeedX = Math.abs(xAxis) >= deadZone ? Math.signum(xAxis) * (Math.abs(xAxis) - deadZone) / (1.0F - deadZone) : 0.0F;
 
-                float yAxis = (float) - this.latestReport.leftStick.vertical;
+                float yAxis = (float) -this.latestReport.leftStick.vertical;
                 this.mouseSpeedY = Math.abs(yAxis) >= deadZone ? Math.signum(yAxis) * (Math.abs(yAxis) - deadZone) / (1.0F - deadZone) : 0.0F;
 
                 this.setControllerInUse();
@@ -294,39 +297,39 @@ public class ControllerInput {
         Minecraft mc = Minecraft.getInstance();
         if (mc.currentScreen != null && (this.targetMouseX != this.prevTargetMouseX || this.targetMouseY != this.prevTargetMouseY)) {
 //            if (!(mc.currentScreen instanceof ControllerLayoutScreen)) {
-                float partialTicks = Minecraft.getInstance().getRenderPartialTicks();
-                double mouseX = (this.prevTargetMouseX + (this.targetMouseX - this.prevTargetMouseX) * partialTicks + 0.5);
-                double mouseY = (this.prevTargetMouseY + (this.targetMouseY - this.prevTargetMouseY) * partialTicks + 0.5);
-                this.setMousePosition(mouseX, mouseY);
+            float partialTicks = Minecraft.getInstance().getRenderPartialTicks();
+            double mouseX = (this.prevTargetMouseX + (this.targetMouseX - this.prevTargetMouseX) * partialTicks + 0.5);
+            double mouseY = (this.prevTargetMouseY + (this.targetMouseY - this.prevTargetMouseY) * partialTicks + 0.5);
+            this.setMousePosition(mouseX, mouseY);
 //            }
         }
     }
 
     private void performMouseDrag(double mouseX, double mouseY, double dragX, double dragY) {
 //        if (Controllable.getController() != null) {
-            Minecraft mc = Minecraft.getInstance();
-            Screen screen = mc.currentScreen;
-            if (screen != null) {
-                if (mc.loadingGui == null) {
-                    double finalMouseX = mouseX * (double) mc.getMainWindow().getScaledWidth() / (double) mc.getMainWindow().getWidth();
-                    double finalMouseY = mouseY * (double) mc.getMainWindow().getScaledHeight() / (double) mc.getMainWindow().getHeight();
-                    Screen.wrapScreenError(() -> screen.mouseMoved(finalMouseX, finalMouseY), "mouseMoved event handler", ((IGuiEventListener) screen).getClass().getCanonicalName());
-                    if (mc.mouseHelper.activeButton != -1 && mc.mouseHelper.eventTime > 0.0D) {
-                        Screen.wrapScreenError(() ->
-                        {
-                            double finalDragX = dragX * (double) mc.getMainWindow().getScaledWidth() / (double) mc.getMainWindow().getWidth();
-                            double finalDragY = dragY * (double) mc.getMainWindow().getScaledHeight() / (double) mc.getMainWindow().getHeight();
-                            if (net.minecraftforge.client.ForgeHooksClient.onGuiMouseDragPre(screen, finalMouseX, finalMouseY, mc.mouseHelper.activeButton, finalDragX, finalDragY)) {
-                                return;
-                            }
-                            if (((IGuiEventListener) screen).mouseDragged(finalMouseX, finalMouseY, mc.mouseHelper.activeButton, finalDragX, finalDragY)) {
-                                return;
-                            }
-                            net.minecraftforge.client.ForgeHooksClient.onGuiMouseDragPost(screen, finalMouseX, finalMouseY, mc.mouseHelper.activeButton, finalDragX, finalDragY);
-                        }, "mouseDragged event handler", ((IGuiEventListener) screen).getClass().getCanonicalName());
-                    }
+        Minecraft mc = Minecraft.getInstance();
+        Screen screen = mc.currentScreen;
+        if (screen != null) {
+            if (mc.loadingGui == null) {
+                double finalMouseX = mouseX * (double) mc.getMainWindow().getScaledWidth() / (double) mc.getMainWindow().getWidth();
+                double finalMouseY = mouseY * (double) mc.getMainWindow().getScaledHeight() / (double) mc.getMainWindow().getHeight();
+                Screen.wrapScreenError(() -> screen.mouseMoved(finalMouseX, finalMouseY), "mouseMoved event handler", ((IGuiEventListener) screen).getClass().getCanonicalName());
+                if (mc.mouseHelper.activeButton != -1 && mc.mouseHelper.eventTime > 0.0D) {
+                    Screen.wrapScreenError(() ->
+                    {
+                        double finalDragX = dragX * (double) mc.getMainWindow().getScaledWidth() / (double) mc.getMainWindow().getWidth();
+                        double finalDragY = dragY * (double) mc.getMainWindow().getScaledHeight() / (double) mc.getMainWindow().getHeight();
+                        if (net.minecraftforge.client.ForgeHooksClient.onGuiMouseDragPre(screen, finalMouseX, finalMouseY, mc.mouseHelper.activeButton, finalDragX, finalDragY)) {
+                            return;
+                        }
+                        if (((IGuiEventListener) screen).mouseDragged(finalMouseX, finalMouseY, mc.mouseHelper.activeButton, finalDragX, finalDragY)) {
+                            return;
+                        }
+                        net.minecraftforge.client.ForgeHooksClient.onGuiMouseDragPost(screen, finalMouseX, finalMouseY, mc.mouseHelper.activeButton, finalDragX, finalDragY);
+                    }, "mouseDragged event handler", ((IGuiEventListener) screen).getClass().getCanonicalName());
                 }
             }
+        }
 //        }
     }
 
@@ -399,6 +402,9 @@ public class ControllerInput {
         if (player == null)
             return;
 
+        if (this.latestReport == null) {
+            return;
+        }
 //        Controller controller = Controllable.getController();
 //        if (controller == null)
 //            return;

@@ -1,13 +1,22 @@
 package com.mrcrayfish.controllable.joycon;
 
+import com.mrcrayfish.controllable.Controllable;
+import com.mrcrayfish.controllable.Reference;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import net.minecraft.util.ResourceLocation;
+
+import java.io.IOException;
+import java.util.Locale;
 
 public interface JoyConRSHandler extends Library {
-    String JNA_LIBRARY_NAME = "joycon_rs_jna";
-//    NativeLibrary JNA_NATIVE_LIB = NativeLibrary.getInstance(JNA_LIBRARY_NAME);
+    public static final String osName = System.getProperty("os.name").toLowerCase(Locale.ROOT);
 
-    JoyConRSHandler INSTANCE = (JoyConRSHandler) Native.load(JNA_LIBRARY_NAME, JoyConRSHandler.class);
+    public static final boolean IS_LINUX = osName.contains("linux");
+    public static final boolean IS_MAC = osName.contains("mac");
+    public static final boolean IS_WINDOWS = osName.contains("windows");
+    final static String JNA_LIBRARY_MAC = "libs/libjoycon_rs_jna.dylib";
+    JoyConRSHandler INSTANCE = (JoyConRSHandler) NativeUtils.loadLibraryFromJar(JNA_LIBRARY_MAC, JoyConRSHandler.class);
 
     RawReport getLatestReport();
 
